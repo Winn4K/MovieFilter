@@ -1,0 +1,7 @@
+Comece definindo o escopo do seu projeto. 
+
+Quais são os objetivos da sua IA? Uma ferramenta interativa que ajuda casais, amigos ou familiares que queiram assistir um filme, mas não conseguem se decidir. 
+Seleciona-se 2 filmes que gostam e que estão com vontade de ver algo parecido, e a IA lê os generos e a sinopse de cada filme e cria um calculo de equidade, 
+no qual se baseia para puxar um terceiro filme que se assemelhe um pouco com os 2 filmes supracitados
+
+Como você deseja que ela analise os filmes? Por gênero, sinopse, dependendo por elenco.
