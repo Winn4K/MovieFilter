@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Movie Filter</title>
+</head>
+<body>
+    <h1 class="titulo">Movie Filter</h1>
+
+    <div class="container">
+        <div>
+            <div class="image" id="imageLeft">
+            </div>
+            <div class="arrow" id="arrowLeft">
+            </div>
+            <div class="image" id="imageCenter">
+            </div>
+            <div class="arrow" id="arrowRight">
+            </div>
+            <div class="image" id="imageRight">
+            </div>
+        </div>
+        <div class="container">
+            <form class="campo">
+                <input type="text" name="firstMovie" autocomplete="off" required />
+                <label for="firstMovie">
+                    <span>Digite o primeiro filme</span>
+                </label>
+            </form>
+            <div class="space" id="arrowLeft">
+            </div>
+            <form class="campo">
+                <input type="text" name="SugestMovie" autocomplete="off" readonly/>
+            </form>
+            <div class="space" id="arrowRight">
+            </div>
+            <form class="campo">
+                <input type="text" name="secondMovie" autocomplete="off" required />
+                <label for="secondMovie">
+                    <span>Digite o segundo filme</span>
+                </label>
+            </form>            
+        </div>      
+    </div>
+</body>
+</html>

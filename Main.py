@@ -1,4 +1,13 @@
-import requests
+import requests # type: ignore
+from flask import Flask, render_template # type: ignore
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return render_template('index.html')
+
+app.run(debug=True)
+
 
 API_KEY = "a6858788eb7fd83a4eb89064e87c52da"
 BASE_URL = "https://api.themoviedb.org/3"
