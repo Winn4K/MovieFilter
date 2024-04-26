@@ -1,17 +1,17 @@
 /* Defina o fundo azul-marinho */
 body {
-    background: url(/static/imgs/bodyBackground.jpg);
+    background: url(/static/imgs/bodyBackground1.jpg);
     background-position: center;
     background-size: cover;
     color: #ffffff; /* Texto branco */
     font-family: Arial, sans-serif;
     text-align: center;
-    padding: 40px;
+    padding: 30px;
 }
 
 /* Estilize o título */
 h1 {
-    text-shadow: 0 0 15px black;
+    text-shadow: 0 0 30px black;
     font-family: sans-serif;
     font-size: 24px;
     margin: 0;
@@ -19,21 +19,44 @@ h1 {
 }
 
 .titulo {
-    font-size: 50px;
+    font-size: 60px;
     margin: 0;
-    padding: 30px;
+    padding: 50px;
 }
 
 .container {
-    background-color: #0099ffab;
-    margin-top: 60px;
+    background-color: #ff00002a;
+    margin-top: 20px;
+    justify-content: space-between;
+}
+
+#containerImgs {
+    border-radius: 10%;
+    border-style: solid;
+    border-width: 8px;
+    border-color: black;
+    padding: 15px;
+}
+
+.banner {
+    display: inline-block;
+    align-content: center;
+    width: 340px;
+    height: 470px;
+    margin: 15px 50px 10px;
+    background-color: black;
+    border-radius: 5%;
+    border-style: solid;
+    border-width: 10px;
+    border-color: #ff0000;
 }
 
 .image {
     display: inline-block; /* Substitua float: left por display: inline-block */
-    width: 300px;
-    height: 430px;
+    width: 310px;
+    height: 435px;
     margin: 15px 50px 10px;
+    margin-left: 15px;
     overflow: hidden;
 }
 
@@ -57,7 +80,7 @@ h1 {
     width: 150px;
     height: 150px;
     overflow: hidden;
-    margin-bottom: 85px;
+    margin-bottom: 140px;
     background: url(imgs/arrow.png);
     background-size: cover;
 }
@@ -90,9 +113,9 @@ input[readonly] {
 
 .campo {
     display: inline-block;
-    width: 300px;
+    width: 360px;
     height: 50px;
-    margin: 0px 50px 10px;
+    margin: 15px 50px 10px;
     overflow: hidden;
 }
 
