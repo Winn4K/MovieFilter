@@ -111,23 +111,83 @@ input {
     padding-bottom: 20px;
 }
 
+input:hover {
+    margin-top: 5px;
+    margin-left: 3px;
+    color: #000000;
+    font-size: 26px;
+    font-family: 'Courier New', Courier, monospace;
+    width: 340px;
+    height: 10px;
+    padding: 20px 5px 5px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding-bottom: 20px;
+}
+
+#labelSugestedMovie {
+    display: flex; /* Habilita o Flexbox */
+    flex-direction: column; /* Organiza os filhos em coluna */
+    align-items: center; /* Alinha os filhos ao centro horizontalmente */
+    justify-content: center; /* Alinha os filhos ao centro verticalmente */
+}
+
 input[readonly] {
+    font-weight: bolder;
+    text-shadow: 0 0 30px rgb(255, 255, 255);
+    -webkit-text-stroke: 1px #000000;
+    text-align: center;
     background-color: #4f4f4f; /* Cor de fundo para indicar "readonly" */
-    color: #888; 
+    color: #ffffff; 
     cursor: not-allowed; 
 }
 
+input[type="submit"] {
+    font-family: fantasy;
+    background-color: #ff0000; /* Cor de fundo para indicar "readonly" */
+    margin-top: 20px;
+    margin-left: 33%;
+    width: 115px;
+    color: #ffffff; 
+    padding-top: 5px; /* Aumenta o espaço no topo, empurrando o texto para baixo */
+    padding-bottom: 10px; /* Aumenta o espaço na parte inferior, elevando o texto */
+    height: 45px; /* Define uma altura fixa para o input */
+    box-sizing: border-box; /* Garante que o padding não afete a altura total do input */
+    border-width: 1px;
+    border-color: #fff;
+    border-style: solid;
+}
+
+input[type="submit"]:hover {
+    font-family: fantasy;
+    background-color: #ff000091; /* Cor de fundo para indicar "readonly" */
+    margin-top: 20px;
+    margin-left: 33%;
+    width: 115px;
+    color: #ffffff; 
+    padding-top: 5px; /* Aumenta o espaço no topo, empurrando o texto para baixo */
+    padding-bottom: 10px; /* Aumenta o espaço na parte inferior, elevando o texto */
+    height: 45px; /* Define uma altura fixa para o input */
+    box-sizing: border-box; /* Garante que o padding não afete a altura total do input */
+    border-width: 1px;
+    border-color: #fff;
+    border-style: solid;
+}
+
 .formFilters {
-    display: inline-block;
-    width: 95%;
-    margin: 20px 0px 10px;
+    flex-direction: row;
+    align-items: flex-start;
+    display: flex;
+    width: 100%;
+    margin-left: 55px;
     position: relative;
 }
 
 .space {
     display: inline-block;
     height: 20px;
-    width: 250px;
+    width: 270px;
     overflow: hidden;
     background-size: cover;
 }
@@ -147,8 +207,8 @@ span {
     transition: all 0.3s ease;
 }
 
-#campoBox {
+.campoBox {
     display: inline-block;
-    width: 370px;
+    width: 350px;
     text-align: left;
 }

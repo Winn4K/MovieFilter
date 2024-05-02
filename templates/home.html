@@ -30,19 +30,23 @@
                 </div>
             </div>
 
-            <form class="formFilters">
-                <div id="campoBox">
+            <form class="formFilters" action="/submit" method="post">
+                <div class="campoBox">
                     <label for="firstMovie"><span>Digite o primeiro filme</span></label>
                     <input type="text" id="firstMovie" name="firstMovie" autocomplete="off" placeholder="" required />
                 </div>
 
                 <div class="space"></div>
 
-                <input type="text" id="SugestMovie" name="SugestMovie" autocomplete="off" readonly />
+                <div class="campoBox" id="labelSugestedMovie">
+                    <label for="SugestMovie"><span>Filme sugerido</span></label>
+                    <input type="text" id="SugestMovie" name="SugestMovie" autocomplete="off" value="{{ filme_return }}" readonly />
+                    <input type="submit" value="Gerar">
+                </div>
                 
                 <div class="space"></div>
 
-                <div id="campoBox">
+                <div class="campoBox">
                     <label for="secondMovie"><span>Digite o segundo filme</span></label>
                     <input type="text" id="secondMovie" name="secondMovie" autocomplete="off" required />
                 </div>
