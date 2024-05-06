@@ -1,6 +1,12 @@
 import requests # type: ignore
-from flask import Flask, request, render_template # type: ignore
+from flask import Flask, request, jsonify, render_template # type: ignore
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app)
+
+API_KEY = "a6858788eb7fd83a4eb89064e87c52da"
+BASE_URL = "https://api.themoviedb.org/3"
 
 @app.route("/")
 def home():
@@ -8,9 +14,6 @@ def home():
 
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
-
-    API_KEY = "a6858788eb7fd83a4eb89064e87c52da"
-    BASE_URL = "https://api.themoviedb.org/3"
 
     def buscar_filme_por_id(filme_id):
         endpoint = f"{BASE_URL}/movie/{filme_id}"
@@ -38,4 +41,12 @@ def submit():
 
         return render_template('home.html', filme_return=filme_return)
 
-app.run(debug=True)
+@app.route('/autocomplete', methods=['GET'])
+def autocomplete():
+    query = request.args.get('q')
+    response = requests.get(f'https://api.themoviedb.org/3/search/movie?api_key={API_KEY}&query={query}&language=pt-BR')
+    results = response.json()['results']
+    return jsonify([movie['title'] for movie in results[:5]])
+
+if __name__ == '__main__':
+    app.run(debug=True)

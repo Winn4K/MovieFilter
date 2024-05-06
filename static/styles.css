@@ -147,7 +147,7 @@ input[type="submit"] {
     font-family: fantasy;
     background-color: #ff0000; /* Cor de fundo para indicar "readonly" */
     margin-top: 20px;
-    margin-left: 33%;
+ 
     width: 115px;
     color: #ffffff; 
     padding-top: 5px; /* Aumenta o espaço no topo, empurrando o texto para baixo */
@@ -163,7 +163,6 @@ input[type="submit"]:hover {
     font-family: fantasy;
     background-color: #ff000091; /* Cor de fundo para indicar "readonly" */
     margin-top: 20px;
-    margin-left: 33%;
     width: 115px;
     color: #ffffff; 
     padding-top: 5px; /* Aumenta o espaço no topo, empurrando o texto para baixo */
@@ -179,17 +178,21 @@ input[type="submit"]:hover {
     flex-direction: row;
     align-items: flex-start;
     display: flex;
-    width: 100%;
-    margin-left: 55px;
+    width: 95%;
+    margin-left: 8%;
     position: relative;
 }
 
 .space {
     display: inline-block;
     height: 20px;
-    width: 270px;
+    width: 15%;
     overflow: hidden;
     background-size: cover;
+}
+
+.movies {
+    text-align: start;
 }
 
 label {

@@ -6,6 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/styles.css">
     <title>Movie Filter</title>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+    $(function() {
+        $(".movies").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "http://localhost:5000/autocomplete",
+                    data: {
+                        q: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 1,
+        });
+    });
+    </script>
+    
 </head>
 
 <body>
@@ -33,7 +56,7 @@
             <form class="formFilters" action="/submit" method="post">
                 <div class="campoBox">
                     <label for="firstMovie"><span>Digite o primeiro filme</span></label>
-                    <input type="text" id="firstMovie" name="firstMovie" autocomplete="off" placeholder="" required />
+                    <input type="text" class="movies" id="firstMovie" name="firstMovie" autocomplete="on" placeholder="" required />
                 </div>
 
                 <div class="space"></div>
@@ -48,7 +71,7 @@
 
                 <div class="campoBox">
                     <label for="secondMovie"><span>Digite o segundo filme</span></label>
-                    <input type="text" id="secondMovie" name="secondMovie" autocomplete="off" required />
+                    <input type="text" class="movies" id="secondMovie" name="secondMovie" autocomplete="on" required />
                 </div>
             </form>
         </div>
