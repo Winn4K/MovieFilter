@@ -8,27 +8,28 @@
     <title>Movie Filter</title>
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-    $(function() {
-        $(".movies").autocomplete({
-            source: function(request, response) {
-                $.ajax({
-                    url: "http://localhost:5000/autocomplete",
-                    data: {
-                        q: request.term
-                    },
-                    success: function(data) {
-                        response(data);
-                    }
-                });
-            },
-            minLength: 1,
+        $(function () {
+            $(".movies").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "http://localhost:5000/autocomplete",
+                        data: {
+                            q: request.term
+                        },
+                        success: function (data) {
+                            response(data);
+                        }
+                    });
+                },
+                minLength: 1,
+            });
         });
-    });
     </script>
-    
+
 </head>
 
 <body>
@@ -37,8 +38,7 @@
     <div class="container" id="containerImgs">
         <div>
             <div class="banner">
-                <div class="image" id="imageLeft">
-                </div>
+                <img src="../static/imgs/FirstMovieImg.png" alt="Pôster do Filme" class="image" id="imageLeft">
             </div>
             <div class="arrow" id="arrowLeft">
             </div>
@@ -49,24 +49,24 @@
             <div class="arrow" id="arrowRight">
             </div>
             <div class="banner">
-                <div class="image" id="imageRight">
-                </div>
+                <img src="../static/imgs/SecondMovieImg.png" alt="Pôster do Filme" class="image" id="imageRight">
             </div>
 
             <form class="formFilters" action="/submit" method="post">
                 <div class="campoBox">
                     <label for="firstMovie"><span>Digite o primeiro filme</span></label>
-                    <input type="text" class="movies" id="firstMovie" name="firstMovie" autocomplete="on" placeholder="" required />
+                    <input type="text" class="movies" id="firstMovie" name="firstMovie" autocomplete="on" required />
                 </div>
 
                 <div class="space"></div>
 
                 <div class="campoBox" id="labelSugestedMovie">
                     <label for="SugestMovie"><span>Filme sugerido</span></label>
-                    <input type="text" id="SugestMovie" name="SugestMovie" autocomplete="off" value="{{ filme_return }}" readonly />
+                    <input type="text" id="SugestMovie" name="SugestMovie" autocomplete="off" value="{{ filme_return }}"
+                        readonly />
                     <input type="submit" value="Gerar">
                 </div>
-                
+
                 <div class="space"></div>
 
                 <div class="campoBox">
@@ -76,6 +76,31 @@
             </form>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            function updateImage(inputId, imageId) {
+                $(`#${inputId}`).on('change', function () {
+                    var texto = $(this).val();
+                    $.ajax({
+                        url: '/meu_form/' + inputId,
+                        data: { [inputId]: texto },
+                        type: 'POST',
+                        success: function (response) {
+                            // Atualize a imagem com a URL do pôster retornada pela API
+                            document.getElementById(imageId).src = response.poster_url;
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                });
+            }
+    
+            updateImage('firstMovie', 'imageLeft');
+            updateImage('secondMovie', 'imageRight');
+        });
+    </script>
 </body>
 
 </html>
