@@ -35,46 +35,59 @@
 <body>
     <h1 class="titulo">Movie Filter</h1>
 
-    <div class="container" id="containerImgs">
-        <div>
-            <div class="banner">
-                <img src="../static/imgs/FirstMovieImg.png" alt="Pôster do Filme" class="image" id="imageLeft">
-            </div>
-            <div class="arrow" id="arrowLeft">
-            </div>
-            <div class="banner">
-                <div class="image" id="imageCenter">
-                </div>
-            </div>
-            <div class="arrow" id="arrowRight">
-            </div>
-            <div class="banner">
-                <img src="../static/imgs/SecondMovieImg.png" alt="Pôster do Filme" class="image" id="imageRight">
-            </div>
+    <div class="container" id="containerGeral">
 
-            <form class="formFilters" action="/submit" method="post">
-                <div class="campoBox">
-                    <label for="firstMovie"><span>Digite o primeiro filme</span></label>
-                    <input type="text" class="movies" id="firstMovie" name="firstMovie" autocomplete="on" required />
+        <form class="formFilters" action="/submit" method="post"></form>
+
+            <div class="container" id="containerImgInput">
+            
+
+                <div class="boxImgInput">
+                    <div class="banner">
+                        <img src="../static/imgs/FirstMovieImg.png" alt="Pôster do Filme" class="image" id="imageLeft">
+                    </div>
+                    <div class="campoBox">
+                        <label for="firstMovie"><span>Digite o primeiro filme</span></label>
+                        <input type="text" class="movies" id="firstMovie" name="firstMovie" autocomplete="on" required />
+                    </div>
+                </div>
+                <div class="boxArrow">
+                    <div class="arrow" id="arrowLeft">
+                    </div>
                 </div>
 
-                <div class="space"></div>
-
-                <div class="campoBox" id="labelSugestedMovie">
-                    <label for="SugestMovie"><span>Filme sugerido</span></label>
-                    <input type="text" id="SugestMovie" name="SugestMovie" autocomplete="off" value="{{ filme_return }}"
-                        readonly />
-                    <input type="submit" value="Gerar">
+                <div class="boxImgInput">
+                    <div class="banner">
+                        <div class="image" id="imageCenter">
+                        </div>
+                    </div>
+                    <div class="campoBox" id="labelSugestedMovie">
+                        <label for="SugestMovie"><span>Filme sugerido</span></label>
+                        <input type="text" id="SugestMovie" name="SugestMovie" autocomplete="off" value="{{ filme_return }}" readonly />
+                    </div>
                 </div>
 
-                <div class="space"></div>
-
-                <div class="campoBox">
-                    <label for="secondMovie"><span>Digite o segundo filme</span></label>
-                    <input type="text" class="movies" id="secondMovie" name="secondMovie" autocomplete="on" required />
+                <div class="boxArrow">
+                    <div class="arrow" id="arrowRight">
+                    </div>
                 </div>
-            </form>
-        </div>
+                
+                <div class="boxImgInput">
+                    <div class="banner">
+                        <img src="../static/imgs/SecondMovieImg.png" alt="Pôster do Filme" class="image" id="imageRight">
+                    </div>
+                    <div class="campoBox">
+                        <label for="secondMovie"><span>Digite o segundo filme</span></label>
+                        <input type="text" class="movies" id="secondMovie" name="secondMovie" autocomplete="on" required />
+                    </div>
+                </div>
+                
+            </div>
+            <div class="boxSubmit">
+                <input type="submit" value="Gerar">
+            </div>
+        </form>
+    
     </div>
 
     <script>
@@ -96,7 +109,7 @@
                     });
                 });
             }
-    
+
             updateImage('firstMovie', 'imageLeft');
             updateImage('secondMovie', 'imageRight');
         });
