@@ -71,12 +71,7 @@ body {
 }
 
 /* imageLeft e imageRight, Configuração das imagens dos pôsters do primeiro e segundo filme */
-#imageLeft, #imageRight{
-}
-
-/* imageCenter, Configuração da imagens do pôster do filme sugerido */
-#imageCenter {
-    background: url(imgs/todoMundoEmPanico.jpg);
+#imageLeft, #imageRight, #imageCenter{
 }
 
 /* boxImgInput, Containers que contém o poster do filme e o campo de pesquisa do filme  */
@@ -165,6 +160,7 @@ input:hover {
 
 /* input[readonly], Configuração do input ReadOnly geral, mas principalmente usado para o filme sugerido */
 input[readonly] {
+    word-wrap: break-word;
     font-weight: bolder;
     text-shadow: 0 0 30px rgb(255, 255, 255);
     -webkit-text-stroke: 1px #000000;

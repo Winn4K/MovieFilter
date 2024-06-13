@@ -10,9 +10,10 @@
     <!-- Importando Jquery -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    
+
     <!-- função de autocomplete -->
     <script>
         $(function () {
@@ -46,92 +47,126 @@
         <!-- Formulario de envio dos filmes selecionados -->
         <form class="formFilters" action="/submit" method="post"></form>
 
-            <!-- Container que contém os pôsters, inputs e as flechas -->
-            <div class="container" id="containerImgInput">
+        <!-- Container que contém os pôsters, inputs e as flechas -->
+        <div class="container" id="containerImgInput">
 
-                <!-- Container que contém o poster do primeiro filme e o campo de pesquisa do primeiro filme -->
-                <div class="boxImgInput">
-                    <!-- Container que contém o poster do primeiro filme -->
-                    <div class="banner">
-                        <img src="../static/imgs/FirstMovieImg.png" alt="Pôster do Filme" class="image" id="imageLeft">
-                    </div>
-                    <!-- Container que contém o campo de pesquisa do primeiro filme -->
-                    <div class="campoBox">
-                        <label for="firstMovie"><span>Digite o primeiro filme</span></label>
-                        <input type="text" class="movies" id="firstMovie" name="firstMovie" autocomplete="on" required />
-                    </div>
+            <!-- Container que contém o poster do primeiro filme e o campo de pesquisa do primeiro filme -->
+            <div class="boxImgInput">
+                <!-- Container que contém o poster do primeiro filme -->
+                <div class="banner">
+                    <img src="../static/imgs/FirstMovieImg.png" alt="Pôster do Filme" class="image" id="imageLeft">
                 </div>
-
-                <!-- Flecha esquerda apontando para a direita -->
-                <div class="boxArrow">
-                    <div class="arrow" id="arrowLeft">
-                    </div>
+                <!-- Container que contém o campo de pesquisa do primeiro filme -->
+                <div class="campoBox">
+                    <label for="firstMovie"><span>Digite o primeiro filme</span></label>
+                    <input type="text" class="movies" id="firstMovie" name="firstMovie" autocomplete="on" required />
                 </div>
-
-                <!-- Container que contém o poster do filme sugerido e o campo ReadOnly que contem o titulo do filme sugerido -->
-                <div class="boxImgInput">
-                    <div class="banner">
-                        <div class="image" id="imageCenter">
-                        </div>
-                    </div>
-                    <div class="campoBox" id="boxSugestedMovie">
-                        <label for="SugestMovie"><span>Filme sugerido</span></label>
-                        <input type="text" id="SugestMovie" name="SugestMovie" autocomplete="off" value="{{ filme_return }}" readonly />
-                    </div>
-                </div>
-
-                <!-- Flecha direita apontando para a esquerda -->
-                <div class="boxArrow">
-                    <div class="arrow" id="arrowRight">
-                    </div>
-                </div>
-                
-                <!-- Container que contém o poster do primeiro filme e o campo de pesquisa do primeiro filme -->
-                <div class="boxImgInput">
-                    <!-- Container que contém o poster do segundo filme -->
-                    <div class="banner">
-                        <img src="../static/imgs/SecondMovieImg.png" alt="Pôster do Filme" class="image" id="imageRight">
-                    </div>
-                    <!-- Container que contém o campo de pesquisa do segundo filme -->
-                    <div class="campoBox">
-                        <label for="secondMovie"><span>Digite o segundo filme</span></label>
-                        <input type="text" class="movies" id="secondMovie" name="secondMovie" autocomplete="on" required />
-                    </div>
-                </div>
-                
             </div>
-            <!-- Container que contém o botão de enviar -->
-            <div class="boxSubmit">
-                <input type="submit" value="Gerar">
+
+            <!-- Flecha esquerda apontando para a direita -->
+            <div class="boxArrow">
+                <div class="arrow" id="arrowLeft">
+                </div>
             </div>
+
+            <!-- Container que contém o poster do filme sugerido e o campo ReadOnly que contem o titulo do filme sugerido -->
+            <div class="boxImgInput">
+                <div class="banner">
+                    <img src="../static/imgs/ReturnedMovie.png" alt="Pôster do Filme" class="image" id="imageCenter">
+                </div>
+                <div class="campoBox" id="boxSugestedMovie">
+                    <label for="SugestMovie"><span>Filme sugerido</span></label>
+                    <input type="text" id="SugestMovie" name="SugestMovie" autocomplete="off" value="{{ filme_return }}"
+                        readonly />
+                </div>
+            </div>
+
+            <!-- Flecha direita apontando para a esquerda -->
+            <div class="boxArrow">
+                <div class="arrow" id="arrowRight">
+                </div>
+            </div>
+
+            <!-- Container que contém o poster do primeiro filme e o campo de pesquisa do primeiro filme -->
+            <div class="boxImgInput">
+                <!-- Container que contém o poster do segundo filme -->
+                <div class="banner">
+                    <img src="../static/imgs/SecondMovieImg.png" alt="Pôster do Filme" class="image" id="imageRight">
+                </div>
+                <!-- Container que contém o campo de pesquisa do segundo filme -->
+                <div class="campoBox">
+                    <label for="secondMovie"><span>Digite o segundo filme</span></label>
+                    <input type="text" class="movies" id="secondMovie" name="secondMovie" autocomplete="on" required />
+                </div>
+            </div>
+
+        </div>
+        <!-- Container que contém o botão de enviar -->
+        <div class="boxSubmit">
+            <input type="submit" value="Gerar" id="botaoGerar" onclick="updateImageRetorno()">
+        </div>
         </form>
-    
+
     </div>
 
     <!-- função que atualiza os posters assim que o usuario seleciona o filme e troca de campo -->
     <script>
-        $(document).ready(function () {
-            function updateImage(inputId, imageId) {
-                $(`#${inputId}`).on('change', function () {
-                    var texto = $(this).val();
-                    $.ajax({
-                        url: '/meu_form/' + inputId,
-                        data: { [inputId]: texto },
-                        type: 'POST',
-                        success: function (response) {
-                            // Atualiza a imagem com a URL do pôster retornada pela API
-                            document.getElementById(imageId).src = response.poster_url;
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    });
-                });
-            }
+        const firstMovieInput = document.getElementById('firstMovie');
+        const secondMovieInput = document.getElementById('secondMovie');
+        const recomendedMovieInput = document.getElementById('SugestMovie');
+        const imageLeft = document.getElementById('imageLeft');
+        const imageRight = document.getElementById('imageRight');
+        const imageRecomendedMovie = document.getElementById('imageCenter')
+        const botaoGerar = document.getElementById('botaoGerar')
+        const API_KEY = 'a6858788eb7fd83a4eb89064e87c52da';
+        var genders = [];
 
-            updateImage('firstMovie', 'imageLeft');
-            updateImage('secondMovie', 'imageRight');
-        });
+        function updateImage(input, image) {
+            input.addEventListener('change', async () => {
+                const movieName = input.value;
+                const url = `https://api.themoviedb.org/3/search/movie?query=${movieName}&api_key=${API_KEY}&language=pt-BR`;
+
+                try {
+                    const response = await fetch(url);
+                    const data = await response.json();
+
+                    if (data.results && data.results.length > 0) {
+                        const movieId = data.results[0].id;
+                        const posterUrl = `https://image.tmdb.org/t/p/w500/${data.results[0].poster_path}`;
+                        const genre = data.results[0].genre_ids[0]
+                        genders.push(genre);
+                        image.src = posterUrl;
+                    } else {
+                        image.src = ''; // Limpar imagem se nenhum pôster for encontrado
+                        console.log('Filme não encontrado.');
+                    }
+                } catch (error) {
+                    console.error('Erro ao buscar pôster:', error);
+                }
+            });
+        }
+
+        updateImage(firstMovieInput, imageLeft);
+        updateImage(secondMovieInput, imageRight);
+
+        async function updateImageRetorno() {
+            const tmdbApiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genders[0]},${genders[1]}`;
+
+            try {
+                const response = await fetch(tmdbApiUrl);
+                const data = await response.json();
+                const movies = data.results[0]; // Lista de filmes encontrados
+                const movieName = movies.original_title;
+                const moviePosterUrl = `https://image.tmdb.org/t/p/w500/${movies.poster_path}`;
+                imageRecomendedMovie.src = moviePosterUrl;
+                recomendedMovieInput.value = movieName;
+                genders = [];
+
+                // Aqui você pode manipular os dados dos filmes conforme necessário
+            } catch (error) {
+                console.error('Erro ao buscar filmes:', error);
+            }
+        }
     </script>
 </body>
 

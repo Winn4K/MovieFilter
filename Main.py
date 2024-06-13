@@ -16,8 +16,7 @@ def home():
     return render_template('home.html')
 
 ### Rota para envio de formulario
-'''
-@app.route('/submit', methods=['GET', 'POST'])
+"""@app.route('/submit', methods=['GET', 'POST'])
 
 def submit():
 
@@ -45,8 +44,9 @@ def submit():
     if filme_info:
         filme_return = filme_info["title"]
 
-        return render_template('home.html', filme_return=filme_return)
-'''
+        return render_template('home.html', filme_return=filme_return)"""
+
+
 ### Rota para atualização de autocomplete
 @app.route('/autocomplete', methods=['GET'])
 def autocomplete():
@@ -54,42 +54,6 @@ def autocomplete():
     response = requests.get(f'https://api.themoviedb.org/3/search/movie?api_key={API_KEY}&query={query}&language=pt-BR')
     results = response.json()['results']
     return jsonify([movie['title'] for movie in results[:5]])
-
-### Rota para a atualizar a imagem do banner após 
-### o usuario selecionar o filme e trocar de campo
-@app.route('/meu_form/<inputId>', methods=['POST', 'GET'])
-def meu_form(inputId):
-    movie_id = None  # Inicialize movie_id com None
-
-    if request.method == 'POST':
-        movieName = request.form[inputId]
-        urlNome = f'https://api.themoviedb.org/3/search/movie?query={movieName}&api_key={API_KEY}&language=pt-BR'
-
-        response = requests.get(urlNome)
-        data = response.json()
-
-        if 'results' in data and data['results']:
-            movie_id = data['results'][0]['id']
-
-    if movie_id:  # Verifique se movie_id existe antes de usá-lo
-        urlId = f'https://api.themoviedb.org/3/movie/{movie_id}?api_key={API_KEY}'
-
-        response = requests.get(urlId)
-        data = response.json()
-
-        full_poster_url = 'Pôster não encontrado.'  # valor padrão
-        poster_path = data.get('poster_path')
-        if poster_path:
-            # URL completa do pôster
-            full_poster_url = f'https://image.tmdb.org/t/p/w500{poster_path}'
-
-        return jsonify({'poster_url': full_poster_url})
-
-    # Se o método não for POST ou se não houver resultados para o filme pesquisado,
-    # retorne uma resposta padrão.
-    return "Nenhum filme foi pesquisado ou o filme pesquisado não foi encontrado."
-    
-
 
 if __name__ == '__main__':
     app.run(debug=True)
