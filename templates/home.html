@@ -34,6 +34,16 @@
         });
     </script>
 
+    <script type="text/javascript">
+        function openPopup() {
+            document.querySelector('.popup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.querySelector('.popup').style.display = 'none';
+        }
+    </script>
+
 </head>
 
 <body>
@@ -73,7 +83,9 @@
             <!-- Container que contém o poster do filme sugerido e o campo ReadOnly que contem o titulo do filme sugerido -->
             <div class="boxImgInput">
                 <div class="banner">
-                    <img src="../static/imgs/ReturnedMovie.png" alt="Pôster do Filme" class="image" id="imageCenter">
+                    <a id="abrirPopup" href="javascript:openPopup()">
+                        <img src="../static/imgs/ReturnedMovie.png" alt="Pôster do Filme" class="image" id="imageCenter">
+                    </a>
                 </div>
                 <div class="campoBox" id="boxSugestedMovie">
                     <label for="SugestMovie"><span>Filme sugerido</span></label>
@@ -111,15 +123,24 @@
 
     </div>
 
+    <div class="popup">
+        <!-- Conteúdo do popup aqui -->
+        <p><b class="detalhesMovie">Sinopse:</b></p>
+        <textarea name="sinopse" id="sinopse" readonly></textarea> <br>
+        <button id="closePopup" onclick="closePopup()">Fechar</button>
+    </div>
+
     <!-- função que atualiza os posters assim que o usuario seleciona o filme e troca de campo -->
     <script>
         const firstMovieInput = document.getElementById('firstMovie');
         const secondMovieInput = document.getElementById('secondMovie');
         const recomendedMovieInput = document.getElementById('SugestMovie');
+        const sinopse = document.getElementById('sinopse');
         const imageLeft = document.getElementById('imageLeft');
         const imageRight = document.getElementById('imageRight');
         const imageRecomendedMovie = document.getElementById('imageCenter')
         const botaoGerar = document.getElementById('botaoGerar')
+        const abrirPopup = document.getElementById('abrirPopup')
         const API_KEY = 'a6858788eb7fd83a4eb89064e87c52da';
         var gendersFirstMovie = '';
         var gendersSecondMovie = '';
@@ -130,7 +151,7 @@
             input.addEventListener('change', async () => {
                 const movieName = input.value;
                 const url = `https://api.themoviedb.org/3/search/movie?query=${movieName}&api_key=${API_KEY}&language=pt-BR`;
-                
+
 
                 try {
                     const response = await fetch(url);
@@ -186,16 +207,18 @@
                             image.src = "../static/imgs/FirstMovieImg.png";
                             imageRecomendedMovie.src = "../static/imgs/ReturnedMovie.png";
                             recomendedMovieInput.value = ''
+                            sinopse.value = '';
                         } else if (input.id == 'secondMovie') {
                             image.src = "../static/imgs/SecondMovieImg.png";
                             imageRecomendedMovie.src = "../static/imgs/ReturnedMovie.png";
                             recomendedMovieInput.value = ''
+                            sinopse.value = '';
                         }
                         if (input.value != '') {
                             alert('Filme não encontrado.');
                         }
                         console.log('Filme não encontrado.');
-                        
+
                     }
                 } catch (error) {
                     console.error('Erro ao buscar pôster:', error);
@@ -208,7 +231,7 @@
         updateImage(secondMovieInput, imageRight);
 
         async function updateImageRetorno() {
-            const tmdbApiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${gendersFirstMovie},${gendersSecondMovie}`;
+            const tmdbApiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${gendersFirstMovie},${gendersSecondMovie}&language=pt-BR`;
 
             if ((firstMovieInput.value == '' || secondMovieInput.value == '')) {
                 imageRecomendedMovie.src = "../static/imgs/ReturnedMovie.png"
@@ -245,9 +268,12 @@
 
                     const movies = moviesFiltrados[filmeSorteado]; // Lista de filmes encontrados
                     const movieName = movies.original_title;
+                    const movieSinopse = movies.overview;
                     const moviePosterUrl = `https://image.tmdb.org/t/p/w500/${movies.poster_path}`;
                     imageRecomendedMovie.src = moviePosterUrl;
                     recomendedMovieInput.value = movieName;
+                    sinopse.value = movieSinopse;
+
                     gendersFirstMovie = '';
                     gendersSecondMovie = '';
 
