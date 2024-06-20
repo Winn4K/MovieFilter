@@ -159,15 +159,21 @@ input:hover {
 }
 
 /* input[readonly], Configuração do input ReadOnly geral, mas principalmente usado para o filme sugerido */
-input[readonly] {
+#SugestMovie {
     word-wrap: break-word;
     font-weight: bolder;
-    text-shadow: 0 0 30px rgb(255, 255, 255);
-    -webkit-text-stroke: 1px #000000;
+    -webkit-text-stroke: 0.5px #000000;
     text-align: center;
     background-color: #4f4f4f;
     color: #ffffff; 
     cursor: not-allowed; 
+    border: #ff0000 solid;
+    
+}
+
+#SugestMovie::placeholder {
+    color: rgb(247, 247, 247);
+    -webkit-text-stroke: 0;
 }
 
 /* input[type="submit"], Configuração do input submit geral, mas principalmente usado para o botão de gerar sugestão de filme */

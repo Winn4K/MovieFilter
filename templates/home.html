@@ -59,7 +59,8 @@
                 <!-- Container que contém o campo de pesquisa do primeiro filme -->
                 <div class="campoBox">
                     <label for="firstMovie"><span>Digite o primeiro filme</span></label>
-                    <input type="text" class="movies" id="firstMovie" name="firstMovie" autocomplete="on" required />
+                    <input type="text" class="movies" id="firstMovie" name="firstMovie" autocomplete="on"
+                        placeholder="Star Wars..." required />
                 </div>
             </div>
 
@@ -76,7 +77,7 @@
                 </div>
                 <div class="campoBox" id="boxSugestedMovie">
                     <label for="SugestMovie"><span>Filme sugerido</span></label>
-                    <input type="text" id="SugestMovie" name="SugestMovie" autocomplete="off" value="{{ filme_return }}"
+                    <input type="text" id="SugestMovie" name="SugestMovie" autocomplete="off" placeholder="..."
                         readonly />
                 </div>
             </div>
@@ -96,7 +97,8 @@
                 <!-- Container que contém o campo de pesquisa do segundo filme -->
                 <div class="campoBox">
                     <label for="secondMovie"><span>Digite o segundo filme</span></label>
-                    <input type="text" class="movies" id="secondMovie" name="secondMovie" autocomplete="on" required />
+                    <input type="text" class="movies" id="secondMovie" name="secondMovie" autocomplete="on"
+                        placeholder="Senhor dos anéis..." required />
                 </div>
             </div>
 
@@ -119,30 +121,86 @@
         const imageRecomendedMovie = document.getElementById('imageCenter')
         const botaoGerar = document.getElementById('botaoGerar')
         const API_KEY = 'a6858788eb7fd83a4eb89064e87c52da';
-        var genders = [];
+        var gendersFirstMovie = '';
+        var gendersSecondMovie = '';
+        var firstMovieId = 0;
+        var secondMovieId = 0;
 
         function updateImage(input, image) {
             input.addEventListener('change', async () => {
                 const movieName = input.value;
                 const url = `https://api.themoviedb.org/3/search/movie?query=${movieName}&api_key=${API_KEY}&language=pt-BR`;
+                
 
                 try {
                     const response = await fetch(url);
                     const data = await response.json();
 
-                    if (data.results && data.results.length > 0) {
+                    if (data.results && data.results.length > 0 && input.value == data.results[0].title) {
                         const movieId = data.results[0].id;
                         const posterUrl = `https://image.tmdb.org/t/p/w500/${data.results[0].poster_path}`;
-                        const genre = data.results[0].genre_ids[0]
-                        genders.push(genre);
+                        var genre = data.results[0].genre_ids[0]
+                        if (input.id == 'firstMovie') {
+                            firstMovieId = movieId;
+                            if ((genre == gendersSecondMovie) && (data.results[0].genre_ids.length > 1)) {
+                                genre = data.results[0].genre_ids[1];
+                            }
+                            gendersFirstMovie = genre;
+                        }
+                        else if (input.id == 'secondMovie') {
+                            secondMovieId = movieId;
+                            if ((genre == gendersFirstMovie) && (data.results[0].genre_ids.length > 1)) {
+                                genre = data.results[0].genre_ids[1];
+                            }
+                            else if ((genre == gendersFirstMovie) && (data.results[0].genre_ids.length == 1)) {
+                                genre = data.results[0].genre_ids[0];
+
+                                urlExcecao = `https://api.themoviedb.org/3/search/movie?query=${firstMovieInput.value}&api_key=${API_KEY}&language=pt-BR`;
+
+                                try {
+                                    const responseExcecao = await fetch(urlExcecao);
+                                    const dataExcecao = await responseExcecao.json();
+
+                                    if (dataExcecao.results && dataExcecao.results.length > 0) {
+                                        const movieId = dataExcecao.results[0].id;
+                                        if (dataExcecao.results[0].genre_ids == 1) {
+                                            gendersFirstMovie = gendersFirstMovie;
+                                        }
+                                        else {
+                                            var genreExcecao = dataExcecao.results[0].genre_ids[1]
+                                            gendersFirstMovie = genreExcecao;
+                                        }
+                                    }
+
+                                } catch (error) {
+                                    console.error('Erro ao buscar novo id gender:', error);
+                                }
+                            }
+                            gendersSecondMovie = genre;
+                        }
+
                         image.src = posterUrl;
+
                     } else {
-                        image.src = ''; // Limpar imagem se nenhum pôster for encontrado
+                        if (input.id == 'firstMovie') {
+                            image.src = "../static/imgs/FirstMovieImg.png";
+                            imageRecomendedMovie.src = "../static/imgs/ReturnedMovie.png";
+                            recomendedMovieInput.value = ''
+                        } else if (input.id == 'secondMovie') {
+                            image.src = "../static/imgs/SecondMovieImg.png";
+                            imageRecomendedMovie.src = "../static/imgs/ReturnedMovie.png";
+                            recomendedMovieInput.value = ''
+                        }
+                        if (input.value != '') {
+                            alert('Filme não encontrado.');
+                        }
                         console.log('Filme não encontrado.');
+                        
                     }
                 } catch (error) {
                     console.error('Erro ao buscar pôster:', error);
                 }
+
             });
         }
 
@@ -150,23 +208,67 @@
         updateImage(secondMovieInput, imageRight);
 
         async function updateImageRetorno() {
-            const tmdbApiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genders[0]},${genders[1]}`;
+            const tmdbApiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${gendersFirstMovie},${gendersSecondMovie}`;
 
-            try {
-                const response = await fetch(tmdbApiUrl);
-                const data = await response.json();
-                const movies = data.results[0]; // Lista de filmes encontrados
-                const movieName = movies.original_title;
-                const moviePosterUrl = `https://image.tmdb.org/t/p/w500/${movies.poster_path}`;
-                imageRecomendedMovie.src = moviePosterUrl;
-                recomendedMovieInput.value = movieName;
-                genders = [];
+            if ((firstMovieInput.value == '' || secondMovieInput.value == '')) {
+                imageRecomendedMovie.src = "../static/imgs/ReturnedMovie.png"
+                if (firstMovieInput.value == '' && secondMovieInput.value != '') {
+                    alert('Não foi possivel gerar um filme pois você não digitou o primeiro filme!')
+                } else if (firstMovieInput.value != '' && secondMovieInput.value == '') {
+                    alert('Não foi possivel gerar um filme pois você não digitou o segundo filme!')
+                } else {
+                    alert('Não foi possivel gerar um filme pois você não digitou o primeiro nem o segundo filme!')
+                }
 
-                // Aqui você pode manipular os dados dos filmes conforme necessário
-            } catch (error) {
-                console.error('Erro ao buscar filmes:', error);
+            } else {
+                try {
+                    const response = await fetch(tmdbApiUrl);
+                    const data = await response.json();
+
+                    const moviesList = data.results;
+                    var moviesFiltrados = [];
+
+                    console.log(firstMovieId)
+                    console.log(secondMovieId)
+
+                    for (i in moviesList) {
+                        if (moviesList[i].original_language == "en" && moviesList[i].id != firstMovieId && moviesList[i].id != secondMovieId) {
+                            moviesFiltrados.push(moviesList[i]);
+                        }
+                    }
+
+                    moviesFiltrados = moviesFiltrados.sort((a, b) => a.vote_average - b.vote_average);
+                    moviesFiltrados = moviesFiltrados.reverse();
+
+                    moviesFiltrados = moviesFiltrados.slice(0, 5);
+                    filmeSorteado = sortearNumero(0, 5);
+
+                    const movies = moviesFiltrados[filmeSorteado]; // Lista de filmes encontrados
+                    const movieName = movies.original_title;
+                    const moviePosterUrl = `https://image.tmdb.org/t/p/w500/${movies.poster_path}`;
+                    imageRecomendedMovie.src = moviePosterUrl;
+                    recomendedMovieInput.value = movieName;
+                    gendersFirstMovie = '';
+                    gendersSecondMovie = '';
+
+                    // Aqui você pode manipular os dados dos filmes conforme necessário
+                } catch (error) {
+                    console.error('Erro ao buscar filmes:', error);
+                }
             }
+
         }
+
+        function sortearNumero(min, max) {
+            // Gera um número aleatório entre 0 (inclusive) e 1 (exclusivo)
+            const randomValue = Math.random();
+
+            // Dimensiona o número para o intervalo [min, max]
+            const sorteado = Math.floor(randomValue * (max - min + 1)) + min;
+
+            return sorteado;
+        }
+
     </script>
 </body>
 
