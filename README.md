@@ -3,6 +3,10 @@
 
 IA interativa que ajuda casais, amigos e etc que queiram assistir um filme mas não conseguem se decidir. Seleciona-se 2 filmes que gostam e que estão com vontade de ver algo parecido, e a IA lê os generos e a sinopse de cada filme e cria uma lista, o qual se baseia para puxar um terceiro filme que se assemelhe um pouco com os 2 filmes supracitados
 
+## Tecnologias Usadas
+
+  Python + Flask, HTML, CSS
+  
 ### Tela Principal
 ![image](https://github.com/user-attachments/assets/581f4677-4940-4679-846f-5e55f00ebad6)
 
