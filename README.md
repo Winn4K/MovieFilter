@@ -5,7 +5,7 @@ IA interativa que ajuda casais, amigos e etc que queiram assistir um filme mas n
 
 ## Tecnologias Usadas
 
-  Python + Flask, HTML, CSS e API TMDB
+  Python + Flask, HTML, CSS, JavaScript e API TMDB
   
 ### Tela Principal
 ![image](https://github.com/user-attachments/assets/581f4677-4940-4679-846f-5e55f00ebad6)
